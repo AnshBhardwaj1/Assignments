@@ -13,8 +13,57 @@
   Output - [{ category: 'Food', totalSpent: 10 }] // Can have multiple categories, only one example is mentioned here
 */
 
+// function calculateTotalSpentByCategory(transactions) {
+//   let categories_combined=[];
+//   let obj={}
+//   for (let i = 0 ; i<transactions.length ; i++ ){
+//     if (transactions[i]["category"] in category_combined.keys == false){
+//       let newObj = Object.assign({},obj,{"category" : transactions[i]["category"], "totalSpent" : 0})
+//       categories_combined.push(newObj)
+//     }  
+//   }
+//   for (let i = 0 ; i<transactions.length ; i++ ){
+//     for (let j = 0; j<categories_combined.length ; j++){
+//       if (categories_combined[j]["category"] === transactions[i]["category"]){
+//         categories_combined[j]["totalSpent"]+= transactions[i]["price"];
+//       }
+//     }
+
+//   }
+
+
+
+//   return categories_combined;
+// }
+
+
 function calculateTotalSpentByCategory(transactions) {
-  return [];
+  let categories_combined = [];
+  let obj = {};
+
+  for (let i = 0; i < transactions.length; i++) {
+    let found = false;
+    for (let j = 0; j < categories_combined.length; j++) {
+      if (categories_combined[j]["category"] === transactions[i]["category"]) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      let newObj = Object.assign({}, obj, { "category": transactions[i]["category"], "totalSpent": 0 });
+      categories_combined.push(newObj);
+    }
+  }
+
+  for (let i = 0; i < transactions.length; i++) {
+    for (let j = 0; j < categories_combined.length; j++) {
+      if (categories_combined[j]["category"] === transactions[i]["category"]) {
+        categories_combined[j]["totalSpent"] += transactions[i]["price"];
+      }
+    }
+  }
+
+  return categories_combined;
 }
 
 module.exports = calculateTotalSpentByCategory;
